@@ -128,8 +128,12 @@ export default {
   },
   methods: {
     submit () {
-      console.log('进入首页')
-      this.$router.push({ path: '/homePage' })
+      if (this.phone === 'admin' || this.password === 'admin') {
+        console.log('进入首页')
+        this.$router.push({ path: '/homePage' })
+      } else {
+        this.$message.error('账户或者密码错误！')
+      }
     },
     loginOrregister () {
       if (this.check === true) {
