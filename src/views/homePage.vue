@@ -3,8 +3,18 @@
     <Header style="height:2.5%"></Header>
     <div class="mainDiv">
       <div class="topSearch">
-        <div>
-
+        <div class="topSearchMain">
+          <div class="Tab">
+            <div class="domestic pointer">
+              国内航班
+            </div>
+            <div class="international pointer">
+              国际航班
+            </div>
+          </div>
+          <div class="inputSearch">
+            <div class="inputPlace"></div>
+          </div>
         </div>
       </div>
       <div class="bottom-carousel">
@@ -62,11 +72,51 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
-    div{
+    .topSearchMain{
       width: 900px;
       height: 100%;
-      background-color: #005797;
       border-radius:10px;
+      background-color: white;
+      .Tab{
+        height: 20%;
+        width: 100%;
+        background-color: #005797;
+        border-radius:10px 10px  0 0;
+        display: flex;
+        .domestic{
+          width: 20%;
+          height: 100%;
+          background-color: white;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 20px;
+          border-radius:10px 0  0 0;
+        }
+        .international{
+          width: 20%;
+          height: 100%;
+          background-color: #005797;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 20px;
+          color: white
+        }
+      }
+      .inputSearch{
+        height: 80%;
+        box-sizing: border-box;
+        padding: 20px;
+        .inputPlace{
+          height: 50px;
+          width: 60%;
+          background-color: #e2e4e5;
+          padding: 5px;
+          box-sizing: border-box;
+          border-radius: 25px;
+        }
+      }
     }
   }
   .bottom-carousel{
@@ -87,5 +137,8 @@ export default {
   }
   .el-carousel__item:nth-child(2n+1) {
     background-color: #d3dce6;
+  }
+  .pointer{
+    cursor:pointer;
   }
 </style>
