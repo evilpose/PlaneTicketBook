@@ -38,6 +38,7 @@ export default {
             justify-content: center;
             align-items: center;
             color: rgb(168, 164, 164);
+            width:300px;
             img{
                 height: 70%
             }
