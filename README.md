@@ -1,21 +1,21 @@
 # planeticketbook
 
-## Project setup
+## 项目安装准备
 ```
 npm install
 ```
 
-### Compiles and hot-reloads for development
+### 编译和热重新加载以进行开发
 ```
 npm run serve
 ```
 
-### Compiles and minifies for production
+### 编译和缩小以供生产上线
 ```
 npm run build
 ```
 
-### Run your unit tests
+### 运行单元测试
 ```
 npm run test:unit
 ```
@@ -25,9 +25,15 @@ npm run test:unit
 npm run lint
 ```
 
-### Customize configuration
+### 自定义配置
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
 ### 测试账号密码
-phone:admin 
+```
+phone:admin
+
+```
+```
 password:admin
+```
+
