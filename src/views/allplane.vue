@@ -1,7 +1,7 @@
 <template>
-  <div class="homePage">
-    <Header style="height:2.5%"></Header>
-    <div class="mainDiv">
+    <div class="main">
+      <Header style="height:2.5%"></Header>
+      <!-- 顶部搜索框 -->
       <div class="topSearch">
         <div class="topSearchMain">
           <div class="Tab">
@@ -59,51 +59,18 @@
           </div>
         </div>
       </div>
-      <!-- 轮播图区域 -->
-      <div class="bottom-carousel">
-        <el-carousel :interval="5000" arrow="always">
-        <el-carousel-item v-for="(item,index) in imgs" :key="index">
-          <img :src = item.img alt="" style="height:100%;width:100%">
-        </el-carousel-item>
-        </el-carousel>
-      </div>
-      <!-- 特价机票 -->
-      <div class="Special">
-        <div style="height:50px;color:#005797;display:flex;align-items:center;;border-bottom:2px solid #005797;font-size:20px;">
-          <span>国际·国内·港澳台特价机票</span>
-        </div>
-        <div class="SpecialMain">
-          <div class="SpecialMainTop">
-            <div style="background-color: #347dece1;;color:white">亚洲</div>
-            <div>欧洲</div>
-            <div>美洲</div>
-            <div>非洲</div>
+      <!-- 所有航班的详情页 -->
+      <div class="allplane">
+          <div class="allplaneMain">
+            <div class="sort"></div>
           </div>
-          <div class="SpecialMainMain">
-            <div class="every" v-for="(item,index) in specialList" :key="index">
-              <p>{{item.start}}→{{item.end}}</p>
-              <p style="color:#999">{{item.date}}</p>
-              <div style="display:flex;justify-content:space-between;align-items:center;">
-                <div style="font-size:10px;">
-                  <span>￥</span><span style="color:red;font-size:20px;">{{item.price}}</span><span>起</span>
-                </div>
-                <div class="pointer" style="height:25px;width:60px;background-color:#fcc97d;font-size:12px;display:flex;justify-content:center;
-                color:white;align-items:center;border-radius:5px;">
-                  立抢
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
-  </div>
-</template>s
+</template>
 <script>
 import Header from '@/components/header.vue'
-import axios from 'axios'
 export default {
-  name: 'homePage',
+  name: 'allplane',
   components: {
     Header
   },
@@ -135,48 +102,18 @@ export default {
       console.log(value)
       console.log(this.num)
     },
-    // 获取特接机票
-    getList () {
-      axios({
-        method: 'get',
-        url: 'http://rap2api.taobao.org/app/mock/239895/special'
-      })
-        .then((response) => {
-          console.log(response)
-          this.specialList = response.data.data
-        })
-        .catch(function (error) {
-          console.log(error)
-        })
-    },
     // 查询飞机详细内容
     submit () {
-      this.$router.push({ path: '/allplane' })
+    //   this.$router.push({ path: '/details' })
+      console.log('查询')
     }
-  },
-  created () {
-    this.getList()
   }
 }
 </script>
 <style lang="scss" scoped>
-  .homePage{
-    width: 100%;
-    height: 200%;
-    background-image:url('../assets/main-bg.jpg');
-    background-position-x: center;
-    background-position-y: top;
-    background-size: initial;
-    background-repeat-x: no-repeat;
-    background-repeat-y: no-repeat;
-    background-attachment: initial;
-    background-origin: initial;
-    background-clip: initial;
-    background-color: initial;
-  }
-  .mainDiv{
-    width: 100%;
-    height: 97.5%;
+  .main{
+      width: 100%;
+      height: 200%;
   }
   .topSearch{
     height: 28%;
@@ -192,6 +129,7 @@ export default {
       height: 100%;
       border-radius:10px;
       background-color: white;
+      box-shadow: 0 0 10px #cfd0d3;
       .Tab{
         height: 20%;
         width: 100%;
@@ -300,82 +238,26 @@ export default {
       }
     }
   }
-  .bottom-carousel{
-      box-sizing: border-box;
-      padding:  10px 150px 0 150px;
-      height: 25%;
-      width: 100%;
-  }
-  .Special{
-    box-sizing: border-box;
-    padding:  20px 150px 0 150px;
-    height: 500px;
-    width: 100%;
-    .SpecialMain{
-      padding: 10px;
-      box-sizing: border-box;
-      height: 450px;
-      width: 100%;
-      background-color: white;
-      min-width: 1219px;
-      .SpecialMainTop{
-        height: 6%;
-        width: 100%;
-        padding: 5px;
-        box-sizing: border-box;
-        display: flex;
-        div{
-          width:60px;
-          height: 100%;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          color:#347dece1;
-          margin-left: 10px;
-          border-radius: 5px;
-          font-size: 12px;
-        }
-      }
-      .SpecialMainMain{
-        height: 94%;
-        width: 100%;
-        display: flex;
-        flex-wrap: wrap;
-        padding: 10px;
-        box-sizing: border-box;
-        .every{
-          padding:10px;
-          box-sizing: border-box;
-          background-color: #f8f8f8;
-          height:120px;
-          width:225px;
-          margin: 0px 10px 10px 0px;
-          display: flex;
-          flex-direction: column;
-          justify-content: space-around;
-          p{
-            margin: 0px;
-            font-size: 13px
-          }
-        }
-      }
-    }
-  }
-  .el-carousel__item h3 {
-    color: #475669;
-    font-size: 18px;
-    opacity: 0.75;
-    line-height: 300px;
-    margin: 0;
-  }
-  .el-carousel__item:nth-child(2n) {
-    background-color: #99a9bf;
-  }
-  .el-carousel__item:nth-child(2n+1) {
-    background-color: #d3dce6;
-  }
   .pointer{
     cursor:pointer;
+  }
+  .allplane{
+    height: 50%;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0 10%;
+    background-color: #fcc97d;
+    .allplaneMain{
+      height: 100%;
+      width: 100%;
+      border: 1px solid #13227a;
+      border-radius: 25px 25px 0 0;
+      .sort{
+        height: 50px;
+        width: 100%;
+        background-color: #cfd0d3;
+      }
+    }
   }
 </style>
 <style lang="scss">
