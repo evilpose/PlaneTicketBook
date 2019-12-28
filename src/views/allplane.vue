@@ -1,6 +1,5 @@
 <template>
-    <div class="main">
-      <Header style="height:2.5%"></Header>
+    <div class="allPlanemain">
       <!-- 顶部搜索框 -->
       <div class="topSearch">
         <div class="topSearchMain">
@@ -62,17 +61,236 @@
       <!-- 所有航班的详情页 -->
       <div class="allplane">
           <div class="allplaneMain">
-            <div class="sort"></div>
+            <!-- 顶部栏 -->
+            <div class="sort">
+              <span style="color:white;font-size:20px;margin-right:600px">筛选</span>
+              <!-- 起飞时间 -->
+              <el-select v-model="takeOffTime" placeholder="起飞时间" style="margin-right:20px;">
+                <el-option
+                  v-for="item in options2"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value">
+                </el-option>
+              </el-select>
+              <!-- 耗时 -->
+              <el-select v-model="time" placeholder="消耗时长" style="margin-right:20px;">
+                <el-option
+                  v-for="item in options3"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value">
+                </el-option>
+              </el-select>
+              <!-- 价格 -->
+              <el-select v-model="price" placeholder="价格" style="margin-right:20px;">
+                <el-option
+                  v-for="item in options4"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value">
+                </el-option>
+              </el-select>
+            </div>
+            <!-- 下面的航班 -->
+            <div style="height:92%;width:100%;overflow-y: scroll;">
+            <!-- 每一班航班 -->
+            <div class="everyPlane">
+              <div class="top">
+                <img src="../assets/logo-small.gif" alt="" style="width:50px;height:50px;margin:20px;">
+                <!-- 飞机公司 -->
+                <div class="name">
+                    <span style="font-size:20px;">国泰航空</span>
+                    <span style="color:#898989">KA951</span>
+                </div>
+                <!-- 起飞时间和地点 -->
+                <div class="main">
+                  <div style="width:30%;font-size:30px;text-align:center">
+                    <span>14:30</span>
+                    <br>
+                    <span style="font-size:25px;">流亭</span>
+                  </div>
+                  <div style="width:40%;text-align:center">
+                    <img src="../assets/rightArrow.svg" alt="" style="height:80px;width:100px">
+                  </div>
+                  <div style="width:30%;font-size:30px;text-align:center">
+                    <span>18:45</span>
+                    <br>
+                    <span style="font-size:25px;">香港</span>
+                  </div>
+                </div>
+                <!-- 用时 -->
+                <div class="time">
+                  3小时45分钟
+                </div>
+              </div>
+              <div class="bottom">
+                <div class="main">
+                  <span style="margin-right:600px">经济舱</span>
+                  <span style="margin-right:100px;color:#f60">￥2877</span>
+                  <div class="pointer">
+                    <span style="line-height: 1;font-size:20px;">订票</span>
+                  </div>
+                </div>
+                <div class="main">
+                  <span style="margin-right:600px">头等舱</span>
+                  <span style="margin-right:100px;color:#f60">￥3877</span>
+                  <div class="pointer">
+                    <span style="line-height: 1;font-size:20px;">订票</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- 每一班航班 -->
+            <div class="everyPlane">
+              <div class="top">
+                <img src="../assets/logo-small.gif" alt="" style="width:50px;height:50px;margin:20px;">
+                <!-- 飞机公司 -->
+                <div class="name">
+                    <span style="font-size:20px;">国泰航空</span>
+                    <span style="color:#898989">KA951</span>
+                </div>
+                <!-- 起飞时间和地点 -->
+                <div class="main">
+                  <div style="width:30%;font-size:30px;text-align:center">
+                    <span>14:30</span>
+                    <br>
+                    <span style="font-size:25px;">流亭</span>
+                  </div>
+                  <div style="width:40%;text-align:center">
+                    <img src="../assets/rightArrow.svg" alt="" style="height:80px;width:100px">
+                  </div>
+                  <div style="width:30%;font-size:30px;text-align:center">
+                    <span>18:45</span>
+                    <br>
+                    <span style="font-size:25px;">香港</span>
+                  </div>
+                </div>
+                <!-- 用时 -->
+                <div class="time">
+                  3小时45分钟
+                </div>
+              </div>
+              <div class="bottom">
+                <div class="main">
+                  <span style="margin-right:600px">经济舱</span>
+                  <span style="margin-right:100px;color:#f60">￥2877</span>
+                  <div class="pointer">
+                    <span style="line-height: 1;font-size:20px;">订票</span>
+                  </div>
+                </div>
+                <div class="main">
+                  <span style="margin-right:600px">头等舱</span>
+                  <span style="margin-right:100px;color:#f60">￥3877</span>
+                  <div class="pointer">
+                    <span style="line-height: 1;font-size:20px;">订票</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- 每一班航班 -->
+            <div class="everyPlane">
+              <div class="top">
+                <img src="../assets/logo-small.gif" alt="" style="width:50px;height:50px;margin:20px;">
+                <!-- 飞机公司 -->
+                <div class="name">
+                    <span style="font-size:20px;">国泰航空</span>
+                    <span style="color:#898989">KA951</span>
+                </div>
+                <!-- 起飞时间和地点 -->
+                <div class="main">
+                  <div style="width:30%;font-size:30px;text-align:center">
+                    <span>14:30</span>
+                    <br>
+                    <span style="font-size:25px;">流亭</span>
+                  </div>
+                  <div style="width:40%;text-align:center">
+                    <img src="../assets/rightArrow.svg" alt="" style="height:80px;width:100px">
+                  </div>
+                  <div style="width:30%;font-size:30px;text-align:center">
+                    <span>18:45</span>
+                    <br>
+                    <span style="font-size:25px;">香港</span>
+                  </div>
+                </div>
+                <!-- 用时 -->
+                <div class="time">
+                  3小时45分钟
+                </div>
+              </div>
+              <div class="bottom">
+                <div class="main">
+                  <span style="margin-right:600px">经济舱</span>
+                  <span style="margin-right:100px;color:#f60">￥2877</span>
+                  <div class="pointer">
+                    <span style="line-height: 1;font-size:20px;">订票</span>
+                  </div>
+                </div>
+                <div class="main">
+                  <span style="margin-right:600px">头等舱</span>
+                  <span style="margin-right:100px;color:#f60">￥3877</span>
+                  <div class="pointer">
+                    <span style="line-height: 1;font-size:20px;">订票</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- 每一班航班 -->
+            <div class="everyPlane">
+              <div class="top">
+                <img src="../assets/logo-small.gif" alt="" style="width:50px;height:50px;margin:20px;">
+                <!-- 飞机公司 -->
+                <div class="name">
+                    <span style="font-size:20px;">国泰航空</span>
+                    <span style="color:#898989">KA951</span>
+                </div>
+                <!-- 起飞时间和地点 -->
+                <div class="main">
+                  <div style="width:30%;font-size:30px;text-align:center">
+                    <span>14:30</span>
+                    <br>
+                    <span style="font-size:25px;">流亭</span>
+                  </div>
+                  <div style="width:40%;text-align:center">
+                    <img src="../assets/rightArrow.svg" alt="" style="height:80px;width:100px">
+                  </div>
+                  <div style="width:30%;font-size:30px;text-align:center">
+                    <span>18:45</span>
+                    <br>
+                    <span style="font-size:25px;">香港</span>
+                  </div>
+                </div>
+                <!-- 用时 -->
+                <div class="time">
+                  3小时45分钟
+                </div>
+              </div>
+              <div class="bottom">
+                <div class="main">
+                  <span style="margin-right:600px">经济舱</span>
+                  <span style="margin-right:100px;color:#f60">￥2877</span>
+                  <div class="pointer">
+                    <span style="line-height: 1;font-size:20px;">订票</span>
+                  </div>
+                </div>
+                <div class="main">
+                  <span style="margin-right:600px">头等舱</span>
+                  <span style="margin-right:100px;color:#f60">￥3877</span>
+                  <div class="pointer">
+                    <span style="line-height: 1;font-size:20px;">订票</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            </div>
           </div>
       </div>
     </div>
 </template>
 <script>
-import Header from '@/components/header.vue'
 export default {
   name: 'allplane',
   components: {
-    Header
   },
   data () {
     return {
@@ -93,7 +311,31 @@ export default {
       }],
       value: '选项1',
       num: 1,
-      specialList: []
+      specialList: [],
+      options2: [{
+        value: '选项1',
+        label: '从早到晚'
+      }, {
+        value: '选项2',
+        label: '从晚到早'
+      }],
+      takeOffTime: '',
+      options3: [{
+        value: '选项1',
+        label: '耗时最短'
+      }, {
+        value: '选项2',
+        label: '耗时最长'
+      }],
+      time: '',
+      options4: [{
+        value: '选项1',
+        label: '从高到低'
+      }, {
+        value: '选项2',
+        label: '从低到高'
+      }],
+      price: ''
     }
   },
   methods: {
@@ -111,154 +353,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-  .main{
-      width: 100%;
-      height: 200%;
-  }
-  .topSearch{
-    height: 28%;
-    width: 100%;
-    box-sizing: border-box;
-    padding: 80px 10%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    .topSearchMain{
-      width: 900px;
-      min-width: 900px;
-      height: 100%;
-      border-radius:10px;
-      background-color: white;
-      box-shadow: 0 0 10px #cfd0d3;
-      .Tab{
-        height: 20%;
-        width: 100%;
-        background-color: #005797;
-        border-radius:10px 10px  0 0;
-        display: flex;
-        .domestic{
-          width: 20%;
-          height: 100%;
-          background-color: white;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          font-size: 20px;
-          border-radius:10px 0  0 0;
-        }
-        .international{
-          width: 20%;
-          height: 100%;
-          background-color: #005797;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          font-size: 20px;
-          color: white
-        }
-      }
-      .inputSearch{
-        height: 80%;
-        box-sizing: border-box;
-        padding: 20px;
-        display: flex;
-        flex-wrap: wrap;
-        align-content: center;
-        .inputPlace{
-          height: 50px;
-          width: 60%;
-          background-color: #f1f4f5;
-          box-shadow:inset 0px 0px 4px 2px rgb(206, 204, 204);
-          padding: 5px 5px;
-          box-sizing: border-box;
-          border-radius: 25px;
-          display: flex;
-          img{
-            width:8%;border:1.5px solid #13227a;border-radius:20px;padding:5px;box-sizing:border-box;
-          }
-        }
-        .inputTime{
-          height: 50px;
-          width: 35%;
-          background-color: #f1f4f5;
-          padding: 5px;
-          box-sizing: border-box;
-          border-radius: 25px;
-          box-shadow:inset 0px 0px 4px 2px rgb(206, 204, 204);
-          display: flex;
-          margin-left: 20px;
-          img{
-            height:100%;box-sizing:border-box;
-          }
-        }
-        .inputSeat{
-          width:30%;
-          height: 50px;
-          background-color: #f1f4f5;
-          padding: 5px;
-          box-sizing: border-box;
-          border-radius: 25px;
-          box-shadow:inset 0px 0px 4px 2px rgb(206, 204, 204);
-          margin-top: 20px;
-          display: flex;
-          justify-content: space-between;
-          img{
-            height:100%;width:40px;;border:1.5px solid #13227a;border-radius:20px;padding:5px;box-sizing:border-box;
-          }
-        }
-        .inputNumber{
-          width:20%;
-          height: 50px;
-          background-color: #f1f4f5;
-          padding: 5px;
-          box-sizing: border-box;
-          border-radius: 25px;
-          box-shadow:inset 0px 0px 4px 2px rgb(206, 204, 204);
-          margin-top: 20px;
-          display: flex;
-          justify-content: space-between;
-          margin-left: 20px;
-          img{
-            height:100%;width:40px;;border:1.5px solid #13227a;border-radius:20px;padding:5px;box-sizing:border-box;
-          }
-        }
-        .search{
-          width:20%;
-          height: 50px;
-          background-color: #fcc97d;
-          color: white;
-          font-size: 20px;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          border-radius: 25px;
-          margin-left: 215px;
-          margin-top: 20px;
-        }
-      }
-    }
-  }
-  .pointer{
-    cursor:pointer;
-  }
-  .allplane{
-    height: 50%;
-    width: 100%;
-    box-sizing: border-box;
-    padding: 0 10%;
-    background-color: #fcc97d;
-    .allplaneMain{
-      height: 100%;
-      width: 100%;
-      border: 1px solid #13227a;
-      border-radius: 25px 25px 0 0;
-      .sort{
-        height: 50px;
-        width: 100%;
-        background-color: #cfd0d3;
-      }
-    }
-  }
+  @import './allplane.scss';
 </style>
 <style lang="scss">
   .inputPlace{
@@ -286,6 +381,15 @@ export default {
       outline: none;
       border: none;
       border-radius: 20px
+    }
+  }
+  .sort{
+    input{
+      // background-color: #f1f4f5;
+      outline: none;
+      border: none;
+      width:150px;
+      border-radius: 40px;
     }
   }
   .inputNumber{

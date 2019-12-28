@@ -6,6 +6,10 @@
             <span>世界这么大，我想去看看</span>
         </div>
         <div>
+            <span class="pointer" @click="backHomepage()">首页</span>
+            <div style="width:10px;"></div>
+            <span style="color:black">/</span>
+            <div style="width:10px;"></div>
             <span class="pointer">我的订单</span>
             <div style="width:10px;"></div>
             <span style="color:black">/</span>
@@ -20,7 +24,16 @@
 </template>
 <script>
 export default {
-  name: 'Header'
+  name: 'Header',
+  data () {
+    return {
+    }
+  },
+  methods: {
+    backHomepage () {
+      this.$router.push({ path: '/homePage' })
+    }
+  }
 }
 </script>
 <style lang="scss" scoped>

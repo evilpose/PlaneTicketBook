@@ -16,15 +16,19 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/homePage.vue')
-  },
-  {
-    path: '/allplane',
-    name: 'allplane',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/allplane.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/homePage.vue'),
+    children: [
+      {
+        path: '/',
+        name: 'home',
+        component: () => import('../views/home.vue')
+      },
+      {
+        path: '/allplane',
+        name: 'allplane',
+        component: () => import('../views/allplane.vue')
+      }
+    ]
   }
 ]
 

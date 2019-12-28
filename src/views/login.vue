@@ -246,7 +246,9 @@ export default {
   .code:active{
     background-color: #ccc
   }
-  div[class~=mySelection]>div{
+</style>
+<style lang="scss">
+  div[class~=mySelection] > div{
     display: flex;
     .el-input{
       width:60%
