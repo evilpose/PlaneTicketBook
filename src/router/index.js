@@ -27,6 +27,16 @@ const routes = [
         path: '/allplane',
         name: 'allplane',
         component: () => import('../views/allplane.vue')
+      },
+      {
+        path: '/order',
+        name: 'order',
+        component: () => import('../views/order.vue')
+      },
+      {
+        path: '/book',
+        name: 'book',
+        component: () => import('../views/book.vue')
       }
     ]
   }

@@ -128,15 +128,15 @@
                 <div class="main">
                   <span style="margin-right:600px">经济舱</span>
                   <span style="margin-right:100px;color:#f60">￥2877</span>
-                  <div class="pointer">
-                    <span style="line-height: 1;font-size:20px;">订票</span>
+                  <div class="pointer" @click="book()">
+                    <span style="line-height: 1;font-size:20px;">预定</span>
                   </div>
                 </div>
                 <div class="main">
                   <span style="margin-right:600px">头等舱</span>
                   <span style="margin-right:100px;color:#f60">￥3877</span>
                   <div class="pointer">
-                    <span style="line-height: 1;font-size:20px;">订票</span>
+                    <span style="line-height: 1;font-size:20px;">预定</span>
                   </div>
                 </div>
               </div>
@@ -348,6 +348,10 @@ export default {
     submit () {
     //   this.$router.push({ path: '/details' })
       console.log('查询')
+    },
+    // 预定票
+    book () {
+      this.$router.push({ path: '/book' })
     }
   }
 }

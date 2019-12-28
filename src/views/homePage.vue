@@ -11,7 +11,7 @@
             <div style="width:10px;"></div>
             <span style="color:black">/</span>
             <div style="width:10px;"></div>
-            <span class="pointer">我的订单</span>
+            <span class="pointer" @click="order()">我的订单</span>
             <div style="width:10px;"></div>
             <span style="color:black">/</span>
             <div style="width:10px;"></div>
@@ -35,6 +35,9 @@ export default {
   methods: {
     backHomepage () {
       this.$router.push({ path: '/homePage' })
+    },
+    order () {
+      this.$router.push({ path: '/order' })
     }
   }
 }

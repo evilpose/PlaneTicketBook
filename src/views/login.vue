@@ -1,9 +1,5 @@
 <template>
   <div class="home">
-    <!-- <img alt="Vue logo" src="../assets/bgc.png"> -->
-    <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
-    <!-- <span>这是登录页面</span> -->
-    <!-- 这个是登录的 -->
     <div style="position:absolute;top:0px;left:0px;color:white;font-size:25px;padding:10px 30px;font-family:Georgia">
       <span>Airline</span> | <span>孟氏航空公司</span>
     </div>
@@ -56,7 +52,7 @@
         <div style="height:20px"></div>
         <div class="Other">
           <span class="pointer">找回密码</span>
-          <span class="pointer"  @click="loginOrregister()">登录</span>
+          <span class="pointer" @click="loginOrregister()">登录</span>
         </div>
       </div>
     </div>
@@ -64,9 +60,10 @@
 </template>
 
 <script>
+import Axios from 'axios'
 // @ is an alias to /src
 // import HelloWorld from '@/components/HelloWorld.vue'
-
+import allApi from '../request/allApi.js'
 export default {
   name: 'login',
   components: {
@@ -99,7 +96,7 @@ export default {
       ruleForm: {
         name: '',
         registerphone: '',
-        registerpassword: '',
+        registerpassword: null,
         registerpasswordagain: '',
         VerificationCode: ''
       },
@@ -151,7 +148,21 @@ export default {
     register (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          alert('submit!')
+          // alert('submit!')
+          // console.log(typeof this.ruleForm.name)
+          // console.log(typeof this.ruleForm.registerphone)
+          // console.log(typeof this.ruleForm.registerpassword)
+          // console.log(typeof this.ruleForm.registerpasswordagain)
+          Axios.post(allApi.loginUrl, {
+            username: this.ruleForm.name,
+            phone: this.ruleForm.registerphone,
+            password: this.ruleForm.registerpassword,
+            password2: this.ruleForm.registerpasswordagain
+          }).then((response) => {
+            console.log(response)
+          }).catch((error) => {
+            console.log(error)
+          })
         } else {
           console.log('error submit!!')
           return false
@@ -166,6 +177,7 @@ export default {
       if (!this.timer) {
         this.count = TIME_COUNT
         this.show = false
+        console.log('请求')
         this.timer = setInterval(() => {
           if (this.count > 0 && this.count <= TIME_COUNT) {
             this.count--
@@ -177,6 +189,9 @@ export default {
         }, 1000)
       }
     }
+  },
+  created () {
+    console.log(allApi.loginUrl)
   }
 }
 </script>
