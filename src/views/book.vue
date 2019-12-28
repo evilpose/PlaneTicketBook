@@ -29,10 +29,57 @@
                 <span style="color:#f60">￥2877</span>
             </div>
         </div>
+        <div style="width:100%;height:20px;"></div>
+        <div class="bottom">
+            <div class="main" v-for="(item, index) in passenger" :key="index">
+                <div style="display:flex;width:100%;justify-content:space-between">
+                    <span style="line-height:2">第{{index+1}}位乘客</span>
+                    <span class="pointer" style="color:#248beb" @click="del">删除</span>
+                </div>
+                <div style="width:300px;display:flex;align-items:center;">
+                    <span style="width:70px;font-size:17px">姓名：</span>
+                    <input v-model="passenger[index].name" placeholder="请输入身份证姓名" style="width:220px">
+                </div>
+                <div style="width:300px;display:flex;align-items:center;">
+                    <span style="width:70px;font-size:17px">身份证：</span>
+                    <input v-model="passenger[index].number" placeholder="请输入身份证号" style="width:220px">
+                </div>
+            </div>
+            <div class="add pointer" @click="add()">
+                + 添加
+            </div>
+        </div>
+        <div class="submit pointer">
+            提交订单
+        </div>
     </div>
 </template>
 <script>
 export default {
+  data () {
+    return {
+      passenger: [
+        {
+          'name': '',
+          'number': ''
+        }
+      ]
+    }
+  },
+  methods: {
+    add () {
+      if (this.passenger.length < 5) {
+        this.passenger.push({ 'name': '', 'number': '' })
+      } else {
+        this.$message.error('最多只能添加5位乘客!')
+      }
+    },
+    del () {
+      if (this.passenger.length > 1) {
+        this.passenger.splice(this.passenger.length - 1, 1)
+      }
+    }
+  }
 }
 </script>
 <style lang="scss" scoped>
@@ -47,6 +94,7 @@ export default {
         box-sizing: border-box;
         border: 1px solid rgb(209, 208, 208);
         padding: 10px;
+        background-color: #EFF6FC;
         .topOne{
             height:60%;
             width: 100%;
@@ -65,5 +113,60 @@ export default {
             }
         }
     }
+    .bottom{
+        width: 100%;
+        padding: 20px 20px;
+        box-sizing: border-box;
+        box-sizing: border-box;
+        border: 1px solid rgb(209, 208, 208);
+        .main{
+            height:150px;
+            width:100%;
+            background-color:rgb(224, 223, 223);
+            padding: 10px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            margin-bottom: 20px;
+            input{
+                outline: none;
+                height: 30px;
+                width: 100px;
+                border: none;
+                padding: 5px;
+                box-sizing: border-box;
+                border-radius: 5px;
+            }
+        }
+        .add{
+            height: 30px;
+            width: 80px;
+            border: 1px solid #248beb;
+            color: #248beb;
+            font-size: 17px;
+            font-weight: bold;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            line-height: 1;
+            border-radius: 5px;
+        }
+    }
+    .submit{
+        height:50px;
+        width: 150px;
+        background-color: #f60;
+        color: white;
+        margin: 20px 0 100px 400px;
+        font-size: 25px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 10px;
+    }
+  }
+  .pointer{
+    cursor:pointer;
   }
 </style>
