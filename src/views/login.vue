@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <div style="position:absolute;top:0px;left:0px;color:white;font-size:25px;padding:10px 30px;font-family:Georgia">
-      <span>Airline</span> | <span>孟氏航空公司</span>
+      <span>Airline</span> | <span @click="homePage" class="pointer">点击前往首页</span>
     </div>
     <div class="loginDiv" v-if="check==true">
       <span style="line-height: 1.5;font-size: 30px;color:#3983e5">登录</span>
@@ -124,23 +124,44 @@ export default {
     }
   },
   methods: {
+    // 登录
     submit () {
-      if (this.phone === 'admin' || this.password === 'admin') {
-        console.log('进入首页')
-        this.$router.push({ path: '/homePage' })
-      } else {
-        this.$message.error('账户或者密码错误！')
-      }
+      // if (this.phone === 'admin' || this.password === 'admin') {
+      //   console.log('进入首页')
+      //   this.$router.push({ path: '/' })
+      // } else {
+      //   this.$message.error('账户或者密码错误！')
+      // }
+      Axios.post('api/user/dologin', {
+        phone: this.phone,
+        password: this.password
+      }).then((response) => {
+        console.log(response)
+        if (response.data.code === 200) {
+          this.$router.push({ path: '/' })
+          // 更改登录状态
+          this.$store.commit('change')
+          // response.data.data.token
+          // 把 token 存在 localStorage 中
+          localStorage.setItem('token', response.data.data.token)
+        } else {
+          this.$message.error('账户或者密码错误！')
+        }
+      }).catch((error) => {
+        console.log(error)
+        this.$message.error('该用户不存在')
+      })
     },
     loginOrregister () {
       if (this.check === true) {
         this.phone = ''
         this.password = ''
       } else {
-        this.name = ''
-        this.registerphone = ''
-        this.registerpassword = ''
-        this.registerpasswordagain = ''
+        this.ruleForm.name = ''
+        this.ruleForm.registerphone = ''
+        this.ruleForm.registerpassword = ''
+        this.ruleForm.registerpasswordagain = ''
+        this.ruleForm.VerificationCode = ''
       }
       this.check = !this.check
     },
@@ -148,20 +169,26 @@ export default {
     register (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          // alert('submit!')
-          // console.log(typeof this.ruleForm.name)
-          // console.log(typeof this.ruleForm.registerphone)
-          // console.log(typeof this.ruleForm.registerpassword)
-          // console.log(typeof this.ruleForm.registerpasswordagain)
-          Axios.post(allApi.loginUrl, {
+          Axios.post('api/user/create', {
             username: this.ruleForm.name,
             phone: this.ruleForm.registerphone,
             password: this.ruleForm.registerpassword,
             password2: this.ruleForm.registerpasswordagain
           }).then((response) => {
             console.log(response)
+            if (response.data.code === 200) {
+              this.$message({
+                message: '恭喜你，注册成功！',
+                type: 'success'
+              })
+              this.loginOrregister()
+            }
+            if (response.data.code === 201) {
+              this.$message.error('注册手机号已经存在！')
+            }
           }).catch((error) => {
             console.log(error)
+            this.$message.error('出现其他的错误')
           })
         } else {
           console.log('error submit!!')
@@ -188,6 +215,9 @@ export default {
           }
         }, 1000)
       }
+    },
+    homePage () {
+      this.$router.push({ path: '/' })
     }
   },
   created () {

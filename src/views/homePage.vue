@@ -15,11 +15,9 @@
             <div style="width:10px;"></div>
             <span style="color:black">/</span>
             <div style="width:10px;"></div>
-            <span class="pointer">您好，请登录</span>
+            <span class="pointer" v-if="this.$store.state.loginState === false" @click="login()">您好，请登录</span>
+            <span class="pointer" v-if="this.$store.state.loginState === true" @click="logout()">退出登录</span>
             <div style="width:10px;"></div>
-            <span style="color:black">/</span>
-            <div style="width:10px;"></div>
-            <span class="pointer">注册</span>
         </div>
       </div>
       <router-view></router-view>
@@ -30,14 +28,32 @@ export default {
   name: 'Header',
   data () {
     return {
+      state: false
     }
   },
   methods: {
     backHomepage () {
-      this.$router.push({ path: '/homePage' })
+      this.$router.push({ path: '/' })
     },
     order () {
       this.$router.push({ path: '/order' })
+    },
+    login () {
+      this.$router.push({ path: '/login' })
+      // console.log(this.$route.name)
+    },
+    logout () {
+      // localStorage.removeItem('token')
+      // this.$store.commit('change')
+      // console.log(this.$route.name)
+      // 如果是在需要登录的页面却退出登录了，那么就要返回到首页
+      if (['book', 'order'].indexOf(this.$route.name) > -1) {
+        this.$router.push({ path: '/' })
+      }
+      // 移除token
+      localStorage.removeItem('token')
+      // 更改了vuex中的登录状态
+      this.$store.commit('change')
     }
   }
 }
