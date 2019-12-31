@@ -9,7 +9,7 @@
       <div class="inputDiv">
         <el-input v-model="phone" placeholder="请输入手机号"></el-input>
         <div style="height:20px"></div>
-        <el-input v-model="password" placeholder="请输入密码" show-password></el-input>
+        <el-input v-model="password" placeholder="请输入密码" show-password @keyup.enter.native="onSubmit"></el-input>
         <div style="height:20px"></div>
         <!-- 登录按钮 -->
         <div class="loginbtn pointer" @click="submit()"><span>登录</span></div>
@@ -151,6 +151,10 @@ export default {
         console.log(error)
         this.$message.error('该用户不存在')
       })
+    },
+    // 回车登录
+    onSubmit () {
+      this.submit()
     },
     loginOrregister () {
       if (this.check === true) {

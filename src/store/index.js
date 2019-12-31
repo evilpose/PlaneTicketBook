@@ -10,6 +10,9 @@ export default new Vuex.Store({
   mutations: {
     change (state) {
       state.loginState = !state.loginState
+    },
+    login (state) {
+      state.loginState = true
     }
   },
   actions: {

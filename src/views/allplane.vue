@@ -29,6 +29,7 @@
               <img src="@/assets/time.svg"/>
                 <el-date-picker
                   v-model="value1"
+                  value-format="yyyy-MM-dd"
                   type="date"
                   placeholder="选择日期"
                   :editable = false>
@@ -94,189 +95,53 @@
             </div>
             <!-- 下面的航班 -->
             <div style="height:92%;width:100%;overflow-y: scroll;">
-            <!-- 每一班航班 -->
-            <div class="everyPlane">
-              <div class="top">
-                <img src="../assets/logo-small.gif" alt="" style="width:50px;height:50px;margin:20px;">
-                <!-- 飞机公司 -->
-                <div class="name">
-                    <span style="font-size:20px;">国泰航空</span>
-                    <span style="color:#898989">KA951</span>
-                </div>
-                <!-- 起飞时间和地点 -->
-                <div class="main">
-                  <div style="width:30%;font-size:30px;text-align:center">
-                    <span>14:30</span>
-                    <br>
-                    <span style="font-size:25px;">流亭</span>
-                  </div>
-                  <div style="width:40%;text-align:center">
-                    <img src="../assets/rightArrow.svg" alt="" style="height:80px;width:100px">
-                  </div>
-                  <div style="width:30%;font-size:30px;text-align:center">
-                    <span>18:45</span>
-                    <br>
-                    <span style="font-size:25px;">香港</span>
-                  </div>
-                </div>
-                <!-- 用时 -->
-                <div class="time">
-                  3小时45分钟
-                </div>
-              </div>
-              <div class="bottom">
-                <div class="main">
-                  <span style="margin-right:600px">经济舱</span>
-                  <span style="margin-right:100px;color:#f60">￥2877</span>
-                  <div class="pointer" @click="book()">
-                    <span style="line-height: 1;font-size:20px;">预定</span>
-                  </div>
-                </div>
-                <div class="main">
-                  <span style="margin-right:600px">头等舱</span>
-                  <span style="margin-right:100px;color:#f60">￥3877</span>
-                  <div class="pointer">
-                    <span style="line-height: 1;font-size:20px;">预定</span>
-                  </div>
-                </div>
-              </div>
+            <div style="width:100%;text-align:center">
+              <span v-if="specialList.length === 0" style="font-size:40px;line-height:5;">
+                暂无此航班
+              </span>
             </div>
             <!-- 每一班航班 -->
-            <div class="everyPlane">
+            <div class="everyPlane" v-for="(item,index) in specialList" :key="index">
               <div class="top">
                 <img src="../assets/logo-small.gif" alt="" style="width:50px;height:50px;margin:20px;">
                 <!-- 飞机公司 -->
                 <div class="name">
                     <span style="font-size:20px;">国泰航空</span>
-                    <span style="color:#898989">KA951</span>
+                    <span style="color:#898989">{{item.flightnum}}</span>
                 </div>
                 <!-- 起飞时间和地点 -->
                 <div class="main">
                   <div style="width:30%;font-size:30px;text-align:center">
-                    <span>14:30</span>
+                    <span>{{item.getofftime}}</span>
                     <br>
-                    <span style="font-size:25px;">流亭</span>
+                    <span style="font-size:25px;">{{item.departure}}</span>
                   </div>
                   <div style="width:40%;text-align:center">
                     <img src="../assets/rightArrow.svg" alt="" style="height:80px;width:100px">
                   </div>
                   <div style="width:30%;font-size:30px;text-align:center">
-                    <span>18:45</span>
+                    <span>{{item.launchtime}}</span>
                     <br>
-                    <span style="font-size:25px;">香港</span>
+                    <span style="font-size:25px;">{{item.destination}}</span>
                   </div>
                 </div>
                 <!-- 用时 -->
                 <div class="time">
-                  3小时45分钟
+                  {{item.hours}}小时{{item.minute}}分钟
                 </div>
               </div>
               <div class="bottom">
                 <div class="main">
                   <span style="margin-right:600px">经济舱</span>
-                  <span style="margin-right:100px;color:#f60">￥2877</span>
-                  <div class="pointer">
+                  <span style="margin-right:100px;color:#f60;width:50px">￥{{item.price}}</span>
+                  <div class="pointer" @click="book(item)">
                     <span style="line-height: 1;font-size:20px;">订票</span>
                   </div>
                 </div>
                 <div class="main">
                   <span style="margin-right:600px">头等舱</span>
-                  <span style="margin-right:100px;color:#f60">￥3877</span>
-                  <div class="pointer">
-                    <span style="line-height: 1;font-size:20px;">订票</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!-- 每一班航班 -->
-            <div class="everyPlane">
-              <div class="top">
-                <img src="../assets/logo-small.gif" alt="" style="width:50px;height:50px;margin:20px;">
-                <!-- 飞机公司 -->
-                <div class="name">
-                    <span style="font-size:20px;">国泰航空</span>
-                    <span style="color:#898989">KA951</span>
-                </div>
-                <!-- 起飞时间和地点 -->
-                <div class="main">
-                  <div style="width:30%;font-size:30px;text-align:center">
-                    <span>14:30</span>
-                    <br>
-                    <span style="font-size:25px;">流亭</span>
-                  </div>
-                  <div style="width:40%;text-align:center">
-                    <img src="../assets/rightArrow.svg" alt="" style="height:80px;width:100px">
-                  </div>
-                  <div style="width:30%;font-size:30px;text-align:center">
-                    <span>18:45</span>
-                    <br>
-                    <span style="font-size:25px;">香港</span>
-                  </div>
-                </div>
-                <!-- 用时 -->
-                <div class="time">
-                  3小时45分钟
-                </div>
-              </div>
-              <div class="bottom">
-                <div class="main">
-                  <span style="margin-right:600px">经济舱</span>
-                  <span style="margin-right:100px;color:#f60">￥2877</span>
-                  <div class="pointer">
-                    <span style="line-height: 1;font-size:20px;">订票</span>
-                  </div>
-                </div>
-                <div class="main">
-                  <span style="margin-right:600px">头等舱</span>
-                  <span style="margin-right:100px;color:#f60">￥3877</span>
-                  <div class="pointer">
-                    <span style="line-height: 1;font-size:20px;">订票</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!-- 每一班航班 -->
-            <div class="everyPlane">
-              <div class="top">
-                <img src="../assets/logo-small.gif" alt="" style="width:50px;height:50px;margin:20px;">
-                <!-- 飞机公司 -->
-                <div class="name">
-                    <span style="font-size:20px;">国泰航空</span>
-                    <span style="color:#898989">KA951</span>
-                </div>
-                <!-- 起飞时间和地点 -->
-                <div class="main">
-                  <div style="width:30%;font-size:30px;text-align:center">
-                    <span>14:30</span>
-                    <br>
-                    <span style="font-size:25px;">流亭</span>
-                  </div>
-                  <div style="width:40%;text-align:center">
-                    <img src="../assets/rightArrow.svg" alt="" style="height:80px;width:100px">
-                  </div>
-                  <div style="width:30%;font-size:30px;text-align:center">
-                    <span>18:45</span>
-                    <br>
-                    <span style="font-size:25px;">香港</span>
-                  </div>
-                </div>
-                <!-- 用时 -->
-                <div class="time">
-                  3小时45分钟
-                </div>
-              </div>
-              <div class="bottom">
-                <div class="main">
-                  <span style="margin-right:600px">经济舱</span>
-                  <span style="margin-right:100px;color:#f60">￥2877</span>
-                  <div class="pointer">
-                    <span style="line-height: 1;font-size:20px;">订票</span>
-                  </div>
-                </div>
-                <div class="main">
-                  <span style="margin-right:600px">头等舱</span>
-                  <span style="margin-right:100px;color:#f60">￥3877</span>
-                  <div class="pointer">
+                  <span style="margin-right:100px;color:#f60;width:50px">￥{{item.price2}}</span>
+                  <div class="pointer" @click="book2(item)">
                     <span style="line-height: 1;font-size:20px;">订票</span>
                   </div>
                 </div>
@@ -288,6 +153,8 @@
     </div>
 </template>
 <script>
+import Axios from 'axios'
+// import qs from 'qs'
 export default {
   name: 'allplane',
   components: {
@@ -347,12 +214,75 @@ export default {
     // 查询飞机详细内容
     submit () {
     //   this.$router.push({ path: '/details' })
-      console.log('查询')
+      if (this.start === '' || this.end === '' || this.value1 === '') {
+        this.$message.error('请完善查询信息！')
+      } else {
+        // console.log(this.start, this.end, this.value1)
+        let time
+        time = this.value1.split('-')[1] + '月' + this.value1.split('-')[2] + '日'
+        let params = {
+          departure: this.start,
+          destination: this.end,
+          date: time
+        }
+        console.log(params)
+        Axios.get('api/flights/search', {
+          params
+        }).then((response) => {
+          console.log(response)
+          if (response.data.code === 200) {
+            this.specialList = response.data.data
+          } if (response.data.code === 404) {
+            this.specialList = []
+          }
+        }).catch((error) => {
+          console.log(error)
+        })
+      }
     },
-    // 预定票
-    book () {
-      this.$router.push({ path: '/book' })
+    // 预定经济舱票
+    book (item) {
+      console.log(item)
+      this.$router.push({ path: '/book',
+        query: {
+          fid: item.fid,
+          flightnum: item.flightnum,
+          date: item.date,
+          getofftime: item.getofftime,
+          launchtime: item.launchtime,
+          departure: item.departure,
+          destination: item.destination,
+          price: item.price,
+          hours: item.hours,
+          minute: item.minute
+        }
+      })
+    },
+    // 预定头等舱票
+    book2 (item) {
+      this.$router.push({ path: '/book',
+        query: {
+          fid: item.fid,
+          flightnum: item.flightnum,
+          date: item.date,
+          getofftime: item.getofftime,
+          launchtime: item.launchtime,
+          departure: item.departure,
+          destination: item.destination,
+          price2: item.price2,
+          hours: item.hours,
+          minute: item.minute
+        }
+      })
     }
+  },
+  created () {
+    console.log(this.$route.query)
+    this.start = this.$route.query.start
+    this.end = this.$route.query.end
+    this.value1 = '2019-' + this.$route.query.time.replace(/月/g, '-').replace(/日/g, '')
+    this.submit()
+    console.log('2019-' + this.$route.query.time.replace(/月/g, '-').replace(/日/g, ''))
   }
 }
 </script>

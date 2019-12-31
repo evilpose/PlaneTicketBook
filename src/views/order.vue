@@ -1,35 +1,35 @@
 <template>
     <div class="orderMain">
-        <div class="everyOne">
+        <div class="everyOne" v-for="(item, index) in orderList" :key="index">
             <div class="top">
                 <span style="margin-left:10px">订单号：</span>
-                <span style="margin-right:20px">111123123</span>
+                <span style="margin-right:20px">{{item.oid}}</span>
                 <span>预定日期：</span>
-                <span>2019-12-18</span>
+                <span>{{item.odate}}</span>
             </div>
             <div class="bottom">
                 <div class="left">
                     <div style="font-size:20px;font-weight: bold">
-                        <span>北京</span>
+                        <span>{{item.departure}}</span>
                         <span>-</span>
-                        <span>香港</span>
+                        <span>{{item.destination}}</span>
                     </div>
                     <div>
                         <span>出发日期：</span>
-                        <span style="margin-right:10px">2019-12-30</span>
-                        <span style="margin-right:10px">12:17</span>
+                        <span style="margin-right:10px">2019年{{item.date}}</span>
+                        <span style="margin-right:10px">{{item.getofftime}}</span>
                         <span style="margin-right:10px">至</span>
-                        <span style="margin-right:10px">15:34</span>
-                        <span>AK91</span>
+                        <span style="margin-right:10px">{{item.launchtime}}</span>
+                        <span>{{item.flightNum}}</span>
                     </div>
                     <div>
                         <span>出行人：</span>
-                        <span>孟庆佳</span>
+                        <span>{{item.name}}</span>
                     </div>
                 </div>
                 <div class="right">
                     <div>
-                        <span style="color:#f60">￥1900</span>
+                        <span style="color:#f60">￥{{item.price}}</span>
                         |
                         <span class="pointer">可取消</span>
                     </div>
@@ -39,7 +39,25 @@
     </div>
 </template>
 <script>
+import service from '../request/request'
 export default {
+  data () {
+    return {
+      orderList: []
+    }
+  },
+  methods: {
+    // 获取订单
+    getList () {
+      service.get('api/getorder').then((response) => {
+        console.log(response)
+        this.orderList = response.data.data
+      })
+    }
+  },
+  created () {
+    this.getList()
+  }
 }
 </script>
 <style lang="scss" scoped>

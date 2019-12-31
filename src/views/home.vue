@@ -29,6 +29,7 @@
               <img src="@/assets/time.svg"/>
                 <el-date-picker
                   v-model="value1"
+                  value-format="yyyy-MM-dd"
                   type="date"
                   placeholder="选择日期"
                   :editable = false>
@@ -80,13 +81,13 @@
           </div>
           <div class="SpecialMainMain">
             <div class="every" v-for="(item,index) in specialList" :key="index">
-              <p>{{item.start}}→{{item.end}}</p>
+              <p>{{item.departure}}→{{item.destination}}</p>
               <p style="color:#999">{{item.date}}</p>
               <div style="display:flex;justify-content:space-between;align-items:center;">
                 <div style="font-size:10px;">
                   <span>￥</span><span style="color:red;font-size:20px;">{{item.price}}</span><span>起</span>
                 </div>
-                <div class="pointer" style="height:25px;width:60px;background-color:#fcc97d;font-size:12px;display:flex;justify-content:center;
+                <div @click="go(item)" class="pointer" style="height:25px;width:60px;background-color:#fcc97d;font-size:12px;display:flex;justify-content:center;
                 color:white;align-items:center;border-radius:5px;">
                   立抢
                 </div>
@@ -97,9 +98,9 @@
       </div>
     </div>
   </div>
-</template>s
+</template>
 <script>
-import axios from 'axios'
+import Axios from 'axios'
 export default {
   name: 'homePage',
   components: {
@@ -134,21 +135,41 @@ export default {
     },
     // 获取特接机票
     getList () {
-      axios({
-        method: 'get',
-        url: 'http://rap2api.taobao.org/app/mock/239895/special'
+      // axios({
+      //   method: 'get',
+      //   url: 'http://rap2api.taobao.org/app/mock/239895/special'
+      // })
+      //   .then((response) => {
+      //     console.log(response)
+      //     this.specialList = response.data.data
+      //   })
+      //   .catch(function (error) {
+      //     console.log(error)
+      //   })
+      Axios.get('api/flights/getflight', {}).then((response) => {
+        console.log(response)
+        if (response.data.code === 200) {
+          this.specialList = response.data.data.data
+        }
+      }).catch((error) => {
+        console.log(error)
       })
-        .then((response) => {
-          console.log(response)
-          this.specialList = response.data.data
-        })
-        .catch(function (error) {
-          console.log(error)
-        })
     },
     // 查询飞机详细内容
     submit () {
-      this.$router.push({ path: '/allplane' })
+      console.log(this.value1)
+      let date
+      date = this.value1.split('-')[1] + '月' + this.value1.split('-')[2] + '日'
+      if (this.start === '' || this.end === '' || this.value1 === '') {
+        this.$message.error('请完善查询信息！')
+      } else {
+        this.$router.push({ path: '/allplane', query: { start: this.start, end: this.end, time: date } })
+      }
+    },
+    // 查询特价机票的详细内容
+    go (data) {
+      console.log(data)
+      this.$router.push({ path: '/allplane', query: { start: data.departure, end: data.destination, time: data.date } })
     }
   },
   created () {

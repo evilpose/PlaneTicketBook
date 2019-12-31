@@ -2,31 +2,35 @@
     <div class="bookMain">
         <div class="top">
             <div class="topOne">
-                <span style="font-size:30px;margin-right:100px">12月15号</span>
+                <span style="font-size:30px;margin-right:100px">{{flightInfo.date}}</span>
                 <div style="width:10%;font-size:20px;text-align:center">
                     <span>国泰航班</span>
-                    <span style="font-size:18px">AK91</span>
+                    <span style="font-size:18px">{{flightInfo.flightnum}}</span>
                 </div>
                 <div style="text-align:center;margin-left:170px">
                     <div style="width:400px;font-size:25px;display:flex;align-items:center;justify-content:space-around;">
                         <div>
-                            <span>14:40</span>
+                            <span>{{flightInfo.getofftime}}</span>
                             <br>
-                            <span style="font-size:20px">流亭</span>
+                            <span style="font-size:20px">{{flightInfo.departure}}</span>
                         </div>
                         <img src="../assets/rightArrow.svg" alt="" style="height:80px;width:100px">
                         <div>
                             <span>16:45</span>
                             <br>
-                            <span style="font-size:20px">香港</span>
+                            <span style="font-size:20px">{{flightInfo.destination}}</span>
                         </div>
                     </div>
-                    <span style="font-size:20px">3小时45分钟</span>
+                    <span style="font-size:20px">{{flightInfo.hours}}小时{{flightInfo.minute}}分钟</span>
                 </div>
             </div>
-            <div class="topTwo">
+            <div class="topTwo" v-if = "flightInfo.price">
                 <span>经济舱</span>
-                <span style="color:#f60">￥2877</span>
+                <span style="color:#f60">￥{{flightInfo.price}}</span>
+            </div>
+            <div class="topTwo" v-else>
+                <span>头等舱</span>
+                <span style="color:#f60">￥{{flightInfo.price2}}</span>
             </div>
         </div>
         <div style="width:100%;height:20px;"></div>
@@ -42,26 +46,28 @@
                 </div>
                 <div style="width:300px;display:flex;align-items:center;">
                     <span style="width:70px;font-size:17px">身份证：</span>
-                    <input v-model="passenger[index].number" placeholder="请输入身份证号" style="width:220px">
+                    <input v-model="passenger[index].idcard" placeholder="请输入身份证号" style="width:220px">
                 </div>
             </div>
             <div class="add pointer" @click="add()">
                 + 添加
             </div>
         </div>
-        <div class="submit pointer">
+        <div class="submit pointer" @click="submit()">
             提交订单
         </div>
     </div>
 </template>
 <script>
+import service from '../request/request'
 export default {
   data () {
     return {
+      flightInfo: [],
       passenger: [
         {
           'name': '',
-          'number': ''
+          'idcard': ''
         }
       ]
     }
@@ -69,7 +75,7 @@ export default {
   methods: {
     add () {
       if (this.passenger.length < 5) {
-        this.passenger.push({ 'name': '', 'number': '' })
+        this.passenger.push({ 'name': '', 'idcard': '' })
       } else {
         this.$message.error('最多只能添加5位乘客!')
       }
@@ -78,7 +84,35 @@ export default {
       if (this.passenger.length > 1) {
         this.passenger.splice(this.passenger.length - 1, 1)
       }
+    },
+    // 提交订单
+    submit () {
+      for (let i = 0; i < this.passenger.length; i++) {
+        if (this.passenger[i].name === '' || this.passenger[i].idcard === '') {
+          this.$message.error('请完善购票信息!')
+          return
+        }
+      }
+      service.post('api/setorder', {
+        fid: this.flightInfo.fid,
+        info: this.passenger
+      }).then((response) => {
+        console.log(response)
+        if (response.data.code === 200) {
+          this.$message.success('预定成功！前往订单页面！')
+          setTimeout(() => {
+            this.$router.push({ path: '/order' })
+          }, 1500)
+        }
+      }).catch((error) => {
+        console.log(error)
+        this.$message.error('出现不知名的错误')
+      })
     }
+  },
+  created () {
+    console.log(this.$route.query)
+    this.flightInfo = this.$route.query
   }
 }
 </script>

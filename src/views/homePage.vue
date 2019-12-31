@@ -24,6 +24,7 @@
     </div>
 </template>
 <script>
+import Axios from 'axios'
 export default {
   name: 'Header',
   data () {
@@ -47,13 +48,43 @@ export default {
       // this.$store.commit('change')
       // console.log(this.$route.name)
       // 如果是在需要登录的页面却退出登录了，那么就要返回到首页
-      if (['book', 'order'].indexOf(this.$route.name) > -1) {
-        this.$router.push({ path: '/' })
-      }
-      // 移除token
-      localStorage.removeItem('token')
-      // 更改了vuex中的登录状态
-      this.$store.commit('change')
+      this.$confirm('此操作将退出登录, 是否继续?', '提示', {
+        lockScroll: false,
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        if (['book', 'order'].indexOf(this.$route.name) > -1) {
+          this.$router.push({ path: '/' })
+        }
+        // 移除token
+        localStorage.removeItem('token')
+        // 更改了vuex中的登录状态
+        this.$store.commit('change')
+        this.$message({
+          type: 'success',
+          message: '退出登录成功!'
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消'
+        })
+      })
+    }
+  },
+  created () {
+    let token = localStorage.getItem('token')
+    if (token) {
+      Axios.get('api/user/auth', {
+        headers: {
+          'token': token
+        }
+      }).then((response) => {
+        if (response.data.code === 200) {
+          this.$store.commit('login')
+        }
+      })
     }
   }
 }

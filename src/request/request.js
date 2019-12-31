@@ -5,31 +5,30 @@ import router from '../router/index'
 
 /* 请求拦截器 */
 
-
-//creatr()在原有的对象上创建新的对象，包含原有的属性以及数据
-//const  声明一个无法更改的常量
+// creatr()在原有的对象上创建新的对象，包含原有的属性以及数据
+// const  声明一个无法更改的常量
 const service = axios.create({
-    // baseURL: process.env.BASE_URL,  // api的base_url
-    timeout: 5000  // 请求超时时间
-});
+  // baseURL: process.env.BASE_URL,  // api的base_url
+  timeout: 5000 // 请求超时时间
+})
 
 service.interceptors.request.use(function (config) { // 每次请求时会从localStorage中获取token
-    // let token = Storage.localGet('token')
-    let token = localStorage.getItem("token")
+  // let token = Storage.localGet('token')
+  let token = localStorage.getItem('token')
 
-    if (token) {
-        // token = "Bearer "+ token.replace(/'|"/g, '') // 把token加入到默认请求参数中 ？？？
-        // token = "Bearer "+ token // 把token加入到默认请求参数中
-        // console.log(token)
-        config.headers.common['token'] = token   // ？？？
-    } else {
-        router.replace({
-            path: '/login' // 到登录页重新获取token
-        })
-    }
-    return config
-    }, function (error) {
-    return Promise.reject(error)
+  if (token) {
+    // token = "Bearer "+ token.replace(/'|"/g, '') // 把token加入到默认请求参数中 ？？？
+    // token = "Bearer "+ token // 把token加入到默认请求参数中
+    // console.log(token)
+    config.headers.common['token'] = token
+  } else {
+    router.replace({
+      path: '/login' // 到登录页重新获取token
+    })
+  }
+  return config
+}, function (error) {
+  return Promise.reject(error)
 })
 
 /* 响应拦截器 */
@@ -50,22 +49,22 @@ service.interceptors.request.use(function (config) { // 每次请求时会从loc
 //     return Promise.reject(error)
 // })
 service.interceptors.response.use(
-    response => {
-        return response
-    },
-    error => {
-        if (error.response) {
-            switch (error.response.status) {
-                case 401:
-                    // 返回 401 清除token信息并跳转到登录页面
-                    localStorage.removeItem('token')
-                    router.replace ({
-                        path: '/login' // 到登录页重新获取token
-                    })
-            }
-            console.log(error.response)
-        }
-        return Promise.reject(error.response.data)   // 返回接口返回的错误信息
-    })
+  response => {
+    return response
+  },
+  error => {
+    if (error.response) {
+      switch (error.response.status) {
+        case 401:
+          // 返回 401 清除token信息并跳转到登录页面
+          localStorage.removeItem('token')
+          router.replace({
+            path: '/login' // 到登录页重新获取token
+          })
+      }
+      console.log(error.response)
+    }
+    return Promise.reject(error.response.data) // 返回接口返回的错误信息
+  })
 
 export default service
