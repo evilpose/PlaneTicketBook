@@ -196,13 +196,35 @@ export default {
       }],
       time: '',
       options4: [{
-        value: '选项1',
+        value: '2',
         label: '从高到低'
       }, {
-        value: '选项2',
+        value: '1',
         label: '从低到高'
       }],
       price: ''
+    }
+  },
+  watch: {
+    price (val, oldVal) {
+      let time
+      time = this.value1.split('-')[1] + '月' + this.value1.split('-')[2] + '日'
+      console.log(val)
+      Axios.get('api/flights/search', {
+        params: {
+          departure: this.start,
+          destination: this.end,
+          date: time,
+          order: val
+        }
+      }).then((response) => {
+        if (response.data.code === 200) {
+          this.specialList = response.data.data
+        }
+      }).catch((error) => {
+        console.log(error)
+        this.$message.error('出现不知名的错误！')
+      })
     }
   },
   methods: {

@@ -31,7 +31,7 @@
                     <div>
                         <span style="color:#f60">￥{{item.price}}</span>
                         |
-                        <span class="pointer">可取消</span>
+                        <span class="pointer" @click="cancel(index)">可取消</span>
                     </div>
                 </div>
             </div>
@@ -40,6 +40,7 @@
 </template>
 <script>
 import service from '../request/request'
+// import Axios from 'axios'
 export default {
   data () {
     return {
@@ -47,11 +48,43 @@ export default {
     }
   },
   methods: {
-    // 获取订单
+    // 获取订单1
     getList () {
       service.get('api/getorder').then((response) => {
         console.log(response)
         this.orderList = response.data.data
+      })
+    },
+    // 取消订单
+    cancel (index) {
+      this.$confirm('此操作将取消订单, 是否继续?', '提示', {
+        lockScroll: false,
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        // console.log(this.orderList[index].id)
+        service.get('api/cancelorder', {
+          params: {
+            id: this.orderList[index].id
+          }
+        }).then((response) => {
+          console.log(response)
+          if (response.data.code === 200) {
+            this.orderList.splice(index, 1)
+            this.$message({
+              type: 'success',
+              message: '取消订单成功!'
+            })
+          }
+        }).catch((error) => {
+          console.log(error)
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已放弃'
+        })
       })
     }
   },
