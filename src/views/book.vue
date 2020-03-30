@@ -93,7 +93,7 @@ export default {
           return
         }
       }
-      service.post('api/setorder', {
+      service.post('http://123.57.29.99:8100/setorder', {
         fid: this.flightInfo.fid,
         info: this.passenger
       }).then((response) => {

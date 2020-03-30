@@ -210,7 +210,7 @@ export default {
       let time
       time = this.value1.split('-')[1] + '月' + this.value1.split('-')[2] + '日'
       console.log(val)
-      Axios.get('api/flights/search', {
+      Axios.get('http://123.57.29.99:8100/flights/search', {
         params: {
           departure: this.start,
           destination: this.end,
@@ -248,7 +248,7 @@ export default {
           date: time
         }
         console.log(params)
-        Axios.get('api/flights/search', {
+        Axios.get('http://123.57.29.99:8100/flights/search', {
           params
         }).then((response) => {
           console.log(response)

@@ -50,7 +50,7 @@ export default {
   methods: {
     // 获取订单1
     getList () {
-      service.get('api/getorder').then((response) => {
+      service.get('http://123.57.29.99:8100/getorder').then((response) => {
         console.log(response)
         this.orderList = response.data.data
       })
@@ -64,7 +64,7 @@ export default {
         type: 'warning'
       }).then(() => {
         // console.log(this.orderList[index].id)
-        service.get('api/cancelorder', {
+        service.get('http://123.57.29.99:8100/cancelorder', {
           params: {
             id: this.orderList[index].id
           }

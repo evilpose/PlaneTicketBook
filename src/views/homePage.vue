@@ -76,7 +76,7 @@ export default {
   created () {
     let token = localStorage.getItem('token')
     if (token) {
-      Axios.get('api/user/auth', {
+      Axios.get('http://123.57.29.99:8100/user/auth', {
         headers: {
           'token': token
         }

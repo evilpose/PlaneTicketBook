@@ -132,7 +132,7 @@ export default {
       // } else {
       //   this.$message.error('账户或者密码错误！')
       // }
-      Axios.post('api/user/dologin', {
+      Axios.post('http://123.57.29.99:8100/user/dologin', {
         phone: this.phone,
         password: this.password
       }).then((response) => {
@@ -173,7 +173,7 @@ export default {
     register (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          Axios.post('api/user/create', {
+          Axios.post('http://123.57.29.99:8100/user/create', {
             username: this.ruleForm.name,
             phone: this.ruleForm.registerphone,
             password: this.ruleForm.registerpassword,

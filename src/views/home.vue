@@ -146,7 +146,7 @@ export default {
       //   .catch(function (error) {
       //     console.log(error)
       //   })
-      Axios.get('api/flights/getflight', {}).then((response) => {
+      Axios.get('http://123.57.29.99:8100/flights/getflight', {}).then((response) => {
         console.log(response)
         if (response.data.code === 200) {
           this.specialList = response.data.data.data
